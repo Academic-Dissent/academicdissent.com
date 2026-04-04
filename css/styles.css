@@ -115,3 +115,15 @@ a:hover { text-decoration: underline; }
   .site-search .site-search-input { width: 36px; }
   .site-search.active .site-search-input { width: 100%; }
 }
+@media (max-width: 600px) {
+  .site-nav {
+    display: flex;
+    flex-wrap: wrap; /* Prevents text from clipping if screen is tiny */
+    justify-content: center; /* Centers the links on mobile */
+    gap: 20px; /* Spacers between each link */
+  }
+
+  .site-nav a {
+    padding: 8px 12px; /* Makes the invisible hit-box bigger and easier to tap */
+  }
+}
