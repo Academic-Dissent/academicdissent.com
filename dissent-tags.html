@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Academic Dissent — Dissent Tags</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="brand">
+        <a href="index.html" class="logo" aria-label="Academic Dissent home">
+          <span class="logo-mark">AD</span>
+          <span class="logo-name">Academic Dissent</span>
+        </a>
+      </div>
+      <nav class="site-nav">
+        <a href="index.html">Ledger</a>
+        <a href="subjects.html">Subjects</a>
+        <a href="dissent-tags.html" class="active">Dissent Tags</a>
+        <a href="about.html">About</a>
+      </nav>
+    </header>
+
+    <main class="container">
+      <h1>Dissent Tags</h1>
+      <div id="taxonomy"></div>
+    </main>
+
+    <footer class="site-footer">
+      <small>© <span id="year"></span> Academic Dissent</small>
+    </footer>
+
+    <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+    <script src="js/data.js"></script>
+    <script src="js/render-taxonomy.js"></script>
+    <script src="js/search.js"></script>
+    <script>
+      window.AD_TAXONOMY = { mode: 'tags' };
+    </script>
+  </body>
+  </html>

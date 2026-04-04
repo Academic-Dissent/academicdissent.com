@@ -1,0 +1,28 @@
+{
+  "dissents": [
+    {
+      "paper_title": "Priming Effects in Economic Choices",
+      "authors": "Smith, J.; Rao, P.; Chen, L.",
+      "year": "2023",
+      "dissent_path": "dissents/2026-priming-effects-randomization-Q7F3N9K2.md"
+    },
+    {
+      "paper_title": "Social Incentives and Worker Productivity",
+      "authors": "Garcia, M.; Thompson, R.; Kim, D.",
+      "year": "2024",
+      "dissent_path": "dissents/2026-peer-effects-productivity-X8R4M2L1.md"
+    },
+    {
+      "paper_title": "Fair Lending in the Age of AI",
+      "authors": "Lee, H.; Nguyen, T.; Miller, S.",
+      "year": "2025",
+      "dissent_path": "dissents/2026-algorithmic-bias-audit-P2W9L5V8.md"
+    },
+    {
+      "paper_title": "Universal Constants in Human Choice: The 2:1 Loss Aversion Ratio",
+      "authors": "Vogel, K.; Schmidt, O.",
+      "year": "2024",
+      "dissent_path": "dissents/2026-loss-aversion-magnitude-K9L2V4J1.md"
+    }
+  ]
+}

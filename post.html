@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Academic Dissent — Critique</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="brand">
+        <a href="index.html" class="logo" aria-label="Academic Dissent home">
+          <span class="logo-mark">AD</span>
+          <span class="logo-name">Academic Dissent</span>
+        </a>
+      </div>
+      <nav class="site-nav">
+        <a href="index.html">Ledger</a>
+        <a href="subjects.html">Subjects</a>
+        <a href="dissent-tags.html">Dissent Tags</a>
+        <a href="about.html">About</a>
+      </nav>
+    </header>
+
+    <main class="container">
+      <article class="post" id="post"></article>
+    </main>
+
+    <footer class="site-footer">
+      <small>© <span id="year"></span> Academic Dissent</small>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <!-- YAML parser for front matter (needed by client-side loader) -->
+    <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+    <!-- Client-side loader to populate AD_DATA from Markdown so post pages can render by slug -->
+    <script src="js/load-dissents.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/common.min.js"></script>
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+      // Configure marked
+      marked.setOptions({
+        breaks: true,
+        highlight: function(code, lang) {
+          try { return hljs.highlight(code, {language: lang}).value; } catch(e) { return hljs.highlightAuto(code).value; }
+        }
+      });
+      // MathJax v3 configuration: support $..$ and $$..$$, and avoid code/pre blocks
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$','$'], ['\\(','\\)']],
+          displayMath: [['$$','$$'], ['\\[','\\]']]
+        },
+        options: {
+          skipHtmlTags: ['script','noscript','style','textarea','pre','code']
+        }
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- Defer post.js so it runs after MathJax and after the loader populated AD_DATA -->
+    <script defer src="js/post.js"></script>
+    <script src="js/search.js"></script>
+  </body>
+  </html>

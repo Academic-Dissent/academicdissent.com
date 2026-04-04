@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Academic Dissent — The Ledger</title>
+    <meta name="description" content="AcademicDissent.com — rigorous, anonymous critiques of published research. The Ledger: a clean feed of dissent." />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="brand">
+        <a href="index.html" class="logo" aria-label="Academic Dissent home">
+          <span class="logo-mark">AD</span>
+          <span class="logo-name">Academic Dissent</span>
+        </a>
+      </div>
+      <nav class="site-nav">
+        <a href="index.html" class="active">Ledger</a>
+        <a href="subjects.html">Subjects</a>
+        <a href="dissent-tags.html">Dissent Tags</a>
+        <a href="about.html">About</a>
+      </nav>
+    </header>
+
+    <main class="container">
+      <h1 class="visually-hidden">The Ledger</h1>
+      <section id="ledger" class="ledger" data-page-size="2"></section>
+    </main>
+
+    <footer class="site-footer">
+      <small>© <span id="year"></span> Academic Dissent • Rigorous, unvarnished truth.</small>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <!-- YAML parser for front matter -->
+    <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+    <!-- Client-side loader to populate AD_DATA from Markdown -->
+    <script src="js/load-dissents.js"></script>
+    <script src="js/render-ledger.js"></script>
+    <script src="js/search.js"></script>
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']] } };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  </body>
+  </html>

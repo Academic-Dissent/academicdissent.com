@@ -1,0 +1,117 @@
+/* Academic Dissent — brutalist academic aesthetic */
+:root {
+  --bg: #f7f2e7; /* off-white/sepia */
+  --fg: #111;
+  --muted: #555;
+  --accent: #4e6e91; /* muted slate blue */
+  --rule: #ddd2bf;
+  --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+html {
+  box-sizing: border-box;
+  -webkit-text-size-adjust: 100%;
+}
+*, *:before, *:after { box-sizing: inherit; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: "Merriweather", "Libre Baskerville", Georgia, serif;
+  line-height: 1.6;
+}
+
+.visually-hidden { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+.site-header {
+  border-bottom: 1px solid var(--rule);
+  background: rgba(255,255,255,0.4);
+  backdrop-filter: blur(2px);
+  position: relative;
+}
+.site-header .brand, .site-header .site-nav {
+  display: inline-block;
+  vertical-align: middle;
+}
+.site-header .brand { padding: 14px 20px; }
+.logo { text-decoration: none; color: inherit; display: flex; align-items: baseline; gap: 10px; }
+.logo-mark {
+  display: inline-block; border: 2px solid var(--fg); padding: 2px 6px; font-weight: 700; letter-spacing: 1px;
+}
+.logo-name { font-weight: 400; font-size: 18px; }
+.site-nav { padding: 0 20px; padding-right: 360px; }
+.site-nav a { color: var(--fg); text-decoration: none; margin: 0 10px; padding: 18px 2px; border-bottom: 2px solid transparent; }
+.site-nav a:hover, .site-nav a.active { border-color: var(--fg); }
+
+/* Site search (top-right) — round icon-only control that expands on focus */
+.site-search {
+  position: absolute;
+  right: 20px;
+  top: 8px;
+  max-width: 48vw;
+}
+.site-search-input {
+  height: 36px;
+  width: 36px; /* collapsed */
+  border: 1px solid var(--rule);
+  background-color: #fff;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='7'/><line x1='21' y1='21' x2='16.65' y2='16.65'/></svg>");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 16px 16px;
+  color: var(--fg);
+  font-family: inherit;
+  font-size: 14px;
+  border-radius: 9999px;
+  padding: 0; /* no text padding when collapsed */
+  transition: width 160ms ease, padding 160ms ease, background-position 160ms ease, border-color 160ms ease;
+}
+.site-search-input:focus { outline: 2px solid rgba(78,110,145,0.25); border-color: var(--accent); }
+.site-search.active .site-search-input {
+  width: 320px; /* expanded */
+  padding-left: 36px; /* room for icon */
+  background-position: 10px center; /* move icon to the left */
+}
+
+/* Legacy dropdown rules kept for backward compat (unused by new JS) */
+.site-search-results { display: none; }
+
+.container { max-width: 900px; margin: 30px auto; padding: 0 20px; }
+
+.ledger { display: grid; gap: 18px; }
+.ledger-item { border-bottom: 1px solid var(--rule); padding-bottom: 14px; }
+.ledger-item a.title { color: var(--fg); text-decoration: none; font-weight: 700; }
+.ledger-item a.title:hover { text-decoration: underline; color: var(--accent); }
+.meta { color: var(--muted); font-size: 14px; }
+
+.chip { display: inline-block; font-size: 12px; padding: 2px 6px; border: 1px solid var(--rule); margin-right: 6px; color: var(--muted); text-decoration: none; }
+.chip:hover { color: var(--fg); border-color: var(--fg); }
+
+.site-footer { border-top: 1px solid var(--rule); padding: 18px 20px; text-align: center; color: var(--muted); }
+
+article.post h1 { font-size: 28px; margin: 0 0 6px; }
+article.post .post-meta { color: var(--muted); margin-bottom: 18px; }
+article.post h2 { font-size: 20px; margin-top: 24px; border-top: 2px solid var(--rule); padding-top: 12px; }
+article.post .section { margin-bottom: 16px; }
+
+code, pre { font-family: var(--mono); background: rgba(0,0,0,0.04); }
+code { padding: 0 4px; border: 1px solid var(--rule); }
+pre { padding: 12px; overflow-x: auto; border: 1px solid var(--rule); }
+pre code { background: transparent; border: 0; padding: 0; }
+
+a { color: var(--accent); }
+a:hover { text-decoration: underline; }
+
+@media print {
+  .site-header, .site-footer, .site-nav { display: none; }
+  body { background: #fff; color: #000; }
+}
+
+/* Responsive: stack search below nav on small screens */
+@media (max-width: 720px) {
+  .site-nav { padding-right: 20px; display: block; }
+  .site-search { position: static; width: auto; max-width: none; padding: 8px 20px 12px; }
+  .site-search .site-search-input { width: 36px; }
+  .site-search.active .site-search-input { width: 100%; }
+}
