@@ -108,115 +108,67 @@ a:hover { text-decoration: underline; }
   body { background: #fff; color: #000; }
 }
 
-/* Responsive: stack search below nav on small screens */
-@media (max-width: 720px) {
-  .site-nav { padding-right: 20px; display: block; }
-  .site-search { position: static; width: auto; max-width: none; padding: 8px 20px 12px; }
-  .site-search .site-search-input { width: 36px; }
-  .site-search.active .site-search-input { width: 100%; }
+/* Hide the hamburger button on desktop */
+.menu-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--fg);
+  padding: 8px;
+  margin-right: 15px; /* Adjust spacing to align with your design */
 }
+
+/* New Mobile Collapsible Menu Styles */
 @media (max-width: 600px) {
   .site-header {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
     align-items: center;
-    padding: 25px 0;
+    padding: 10px 0;
   }
 
+  .site-header .brand {
+    padding: 10px 20px;
+  }
+
+  /* Show the hamburger menu button */
+  .menu-toggle {
+    display: block;
+  }
+
+  /* Hide navigation by default and format it as a vertical list */
   .site-nav {
-    display: flex;
+    display: none;
+    width: 100%;
     flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-    width: 100%;
+    padding: 0;
+    background: var(--bg);
+    border-top: 1px solid var(--rule);
+    margin-top: 10px;
   }
 
+  /* Class toggled by JavaScript to show the menu */
+  .site-nav.open {
+    display: flex;
+  }
+
+  /* Style the mobile links */
   .site-nav a {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 1.1rem;
-    color: #333;
-    text-decoration: none;
-    padding: 14px 0; /* Plenty of space for mobile tapping */
-    width: 100%;
     text-align: center;
-    transition: background-color 0.2s ease;
+    padding: 15px 0;
+    margin: 0;
+    border-bottom: 1px solid var(--rule);
   }
 
-  /* Subtle highlight when finger holds down on mobile */
-  .site-nav a:active {
-    background-color: #f9f9f9;
+  .site-nav a:last-child {
+    border-bottom: none;
   }
 
   .site-nav a.active {
     font-weight: 700;
-    text-decoration: underline;
-    text-underline-offset: 4px;
-  }
-}
-@media (max-width: 600px) {
-  /* 1. Force the header and nav to grow vertically if items wrap */
-  .site-header, 
-  .site-nav {
-    height: auto !important; 
-    min-height: 0 !important;
-  }
-
-  /* 2. Turn on wrapping and add controlled spacing */
-  .site-nav {
-    display: flex !important;
-    flex-wrap: wrap !important; /* Allows items to drop to the next line */
-    justify-content: center;
-    align-items: center;
-    
-    /* The magic trick: 15px of space between wrapped rows, 20px between columns */
-    gap: 15px 20px !important; 
-    
-    padding: 10px 0;
-  }
-
-  /* 3. Give the links a clean clickable area without crazy line-heights */
-  .site-nav a {
-    display: inline-block;
-    line-height: 1.2 !important;
-    padding: 8px 12px;
-    margin: 0 !important; /* Clears out any old margins that might cause weird shifts */
-  }
-}
-
-@media (max-width: 600px) {
-  /* 1. Reset the header height so it can expand */
-  .site-header {
-    height: auto !important;
-    padding: 20px 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-  }
-
-  /* 2. Fix the navigation container */
-  .site-nav {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    justify-content: center !important;
-    gap: 20px 15px !important; /* Vertical gap, Horizontal gap */
-    height: auto !important;
-    margin-top: 15px !important;
-    line-height: normal !important; /* Fixes the overlapping text */
-  }
-
-  /* 3. Kill the double underline and fix the buttons */
-  .site-nav a {
-    text-decoration: none !important; /* Removes the standard underline */
-    border-bottom: none !important;  /* Removes any border-based underline */
-    padding: 10px 15px !important;   /* Creates a large touch area */
-    display: inline-block !important;
-    margin: 0 !important;
-  }
-
-  /* 4. Re-apply a single, clean underline ONLY for the active page */
-  .site-nav a.active {
-    font-weight: bold !important;
-    border-bottom: 2px solid currentColor !important; /* Just one clean line */
-    padding-bottom: 5px !important;
+    background-color: rgba(0,0,0,0.03); /* Subtle highlight for active page */
+    border-bottom: 1px solid var(--rule);
   }
 }

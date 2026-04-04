@@ -18,6 +18,14 @@
           <span class="logo-name">Academic Dissent</span>
         </div>
       </div>
+              <!-- New Hamburger Menu Button -->
+      <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
       <nav class="site-nav">
         <a href="index.html" class="active">Ledger</a>
         <a href="subjects.html">Subjects</a>
@@ -47,5 +55,19 @@
       window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']] } };
     </script>
     <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const menuToggle = document.querySelector('.menu-toggle');
+        const siteNav = document.querySelector('.site-nav');
+
+        if(menuToggle && siteNav) {
+          menuToggle.addEventListener('click', function() {
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            siteNav.classList.toggle('open');
+          });
+        }
+      });
+    </script>
   </body>
 </html>
