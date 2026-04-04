@@ -183,4 +183,40 @@ a:hover { text-decoration: underline; }
   }
 }
 
+@media (max-width: 600px) {
+  /* 1. Reset the header height so it can expand */
+  .site-header {
+    height: auto !important;
+    padding: 20px 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
 
+  /* 2. Fix the navigation container */
+  .site-nav {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 20px 15px !important; /* Vertical gap, Horizontal gap */
+    height: auto !important;
+    margin-top: 15px !important;
+    line-height: normal !important; /* Fixes the overlapping text */
+  }
+
+  /* 3. Kill the double underline and fix the buttons */
+  .site-nav a {
+    text-decoration: none !important; /* Removes the standard underline */
+    border-bottom: none !important;  /* Removes any border-based underline */
+    padding: 10px 15px !important;   /* Creates a large touch area */
+    display: inline-block !important;
+    margin: 0 !important;
+  }
+
+  /* 4. Re-apply a single, clean underline ONLY for the active page */
+  .site-nav a.active {
+    font-weight: bold !important;
+    border-bottom: 2px solid currentColor !important; /* Just one clean line */
+    padding-bottom: 5px !important;
+  }
+}
