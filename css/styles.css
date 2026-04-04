@@ -153,6 +153,34 @@ a:hover { text-decoration: underline; }
     text-underline-offset: 4px;
   }
 }
+@media (max-width: 600px) {
+  /* 1. Force the header and nav to grow vertically if items wrap */
+  .site-header, 
+  .site-nav {
+    height: auto !important; 
+    min-height: 0 !important;
+  }
 
+  /* 2. Turn on wrapping and add controlled spacing */
+  .site-nav {
+    display: flex !important;
+    flex-wrap: wrap !important; /* Allows items to drop to the next line */
+    justify-content: center;
+    align-items: center;
+    
+    /* The magic trick: 15px of space between wrapped rows, 20px between columns */
+    gap: 15px 20px !important; 
+    
+    padding: 10px 0;
+  }
+
+  /* 3. Give the links a clean clickable area without crazy line-heights */
+  .site-nav a {
+    display: inline-block;
+    line-height: 1.2 !important;
+    padding: 8px 12px;
+    margin: 0 !important; /* Clears out any old margins that might cause weird shifts */
+  }
+}
 
 
