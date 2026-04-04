@@ -116,14 +116,43 @@ a:hover { text-decoration: underline; }
   .site-search.active .site-search-input { width: 100%; }
 }
 @media (max-width: 600px) {
+  .site-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px 0;
+  }
+
   .site-nav {
     display: flex;
-    flex-wrap: wrap; /* Prevents text from clipping if screen is tiny */
-    justify-content: center; /* Centers the links on mobile */
-    gap: 20px; /* Spacers between each link */
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    width: 100%;
   }
 
   .site-nav a {
-    padding: 8px 12px; /* Makes the invisible hit-box bigger and easier to tap */
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    color: #333;
+    text-decoration: none;
+    padding: 14px 0; /* Plenty of space for mobile tapping */
+    width: 100%;
+    text-align: center;
+    transition: background-color 0.2s ease;
+  }
+
+  /* Subtle highlight when finger holds down on mobile */
+  .site-nav a:active {
+    background-color: #f9f9f9;
+  }
+
+  .site-nav a.active {
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 4px;
   }
 }
+
+
+
