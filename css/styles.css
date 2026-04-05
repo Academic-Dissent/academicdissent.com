@@ -280,22 +280,25 @@ a:hover { text-decoration: underline; }
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); /* Slightly darker for better focus */
-    backdrop-filter: blur(2px); /* Adds a subtle blur to the background text */
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(2px);
+
+    /* ADDED: Allow the overlay itself to scroll if the screen is tiny */
+    overflow-y: auto;
+    padding-bottom: 2rem; /* Ensure space at the bottom when scrolling */
 }
 
 /* Modal Content Box */
 .modal-content {
     background-color: var(--bg-color);
-    margin: 8% auto;
-    padding: 3rem 2.5rem; /* More breathing room inside */
-    border: 3px solid var(--text-color); /* Thicker, more brutalist border */
+    margin: 5vh auto; /* CHANGED: Reduced from 8% to 5vh to sit higher on the screen */
+    padding: 2.5rem 2rem; /* CHANGED: Reduced padding slightly to save vertical space */
+    border: 3px solid var(--text-color);
     width: 90%;
     max-width: 420px;
     position: relative;
-    box-shadow: 8px 8px 0px rgba(0,0,0,0.15); /* Stronger offset shadow */
+    box-shadow: 8px 8px 0px rgba(0,0,0,0.15);
 }
-
 /* The Close Button (x) */
 .close-modal {
     position: absolute;
@@ -308,6 +311,40 @@ a:hover { text-decoration: underline; }
     cursor: pointer;
     line-height: 1;
     transition: color 0.2s ease;
+}
+/* Form Typography - Tighter spacing */
+#form-title {
+    font-family: 'Merriweather', serif;
+    font-size: 1.3rem; /* Slightly smaller */
+    margin-bottom: 0.3rem;
+    margin-top: 0;
+    color: var(--text-color);
+}
+
+.modal-desc {
+    font-family: sans-serif;
+    font-size: 0.8rem; /* Slightly smaller */
+    line-height: 1.3;
+    color: var(--meta-color);
+    margin-bottom: 1.5rem; /* Reduced from 2rem */
+    border-left: 3px solid var(--accent-color);
+    padding-left: 0.8rem;
+}
+
+/* Form Inputs inside Modal - Tighter spacing */
+.modal-content .form-group {
+    margin-bottom: 1rem; /* Reduced from 1.5rem */
+}
+
+.modal-content label {
+    display: block;
+    font-family: sans-serif;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.3rem;
+    color: var(--text-color);
 }
 
 .close-modal:hover {

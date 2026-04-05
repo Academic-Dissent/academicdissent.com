@@ -2,12 +2,32 @@
 // 1. GLOBAL UI FUNCTIONS
 // ==========================================
 
+let isLoginMode = true;
+let turnstileWidgetId = null;
+
+window.renderTurnstileWidget = function() {
+    // Only attempt to render if Cloudflare is loaded and the widget hasn't been rendered yet
+    if (typeof isTurnstileLoaded !== 'undefined' && isTurnstileLoaded && turnstileWidgetId === null && window.turnstile) {
+        const widgetDiv = document.querySelector('.cf-turnstile');
+        if (widgetDiv) {
+            turnstileWidgetId = window.turnstile.render(widgetDiv, {
+                sitekey: widgetDiv.getAttribute('data-sitekey')
+            });
+        }
+    }
+};
+
 window.openAuthModal = function() {
     const modal = document.getElementById("auth-modal");
     if (modal) {
         modal.style.display = "block";
         const feedback = document.getElementById('authFeedback');
         if (feedback) feedback.textContent = "";
+
+        // Ensure Captcha renders immediately when modal opens, regardless of mode
+        window.renderTurnstileWidget();
+    } else {
+        console.error("auth-modal not found in the DOM.");
     }
 };
 
@@ -23,8 +43,6 @@ window.onclick = function(event) {
     }
 };
 
-let isLoginMode = true;
-
 window.setMode = function(login) {
     isLoginMode = login;
     document.getElementById('tab-login').className = login ? 'active-tab' : 'inactive-tab';
@@ -32,6 +50,19 @@ window.setMode = function(login) {
     document.getElementById('form-title').textContent = login ? 'Access the Ledger' : 'Register a Pseudonym';
     document.getElementById('authBtn').textContent = login ? 'Log In' : 'Register Securely';
     document.getElementById('authFeedback').textContent = '';
+
+    // The Captcha must ALWAYS be visible because Supabase requires it for both Login and Register
+    const recaptchaContainer = document.getElementById('recaptcha-container');
+    if (recaptchaContainer) {
+        recaptchaContainer.style.display = 'flex';
+
+        // Failsafe: if they switch tabs and it somehow hasn't rendered, try again
+        if (typeof isTurnstileLoaded !== 'undefined' && isTurnstileLoaded) {
+            window.renderTurnstileWidget();
+        } else {
+            setTimeout(window.renderTurnstileWidget, 500);
+        }
+    }
 };
 
 window.togglePasswordVisibility = function() {
@@ -63,19 +94,19 @@ const DUMMY_DOMAIN = '@academicdissent.local';
 
 let supabaseClient = null;
 
-// Create a global Promise that signals when Supabase is ready
 window.supabaseReady = new Promise((resolve) => {
     function initSupabase() {
         if (window.supabase) {
             supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
             updateNavState();
-            resolve(supabaseClient); // Tell the dashboard it is safe to check the session
+            resolve(supabaseClient);
         } else {
             setTimeout(initSupabase, 50);
         }
     }
     initSupabase();
 });
+
 // ==========================================
 // 3. AUTHENTICATION LOGIC
 // ==========================================
@@ -96,7 +127,7 @@ async function updateNavState() {
         if (session) {
             const username = session.user.email.split('@')[0];
             authNav.innerHTML = `
-                <a href="dashboard.html" style="color: var(--accent-color); font-weight: bold; font-size: 0.85rem; font-family: sans-serif; margin-left: 1.5rem;">[${username}]</a>
+                <a href="dashboard.html" style="color: var(--accent-color); font-weight: bold; font-size: 0.85rem; font-family: sans-serif; margin-left: 1.5rem; text-transform: uppercase;">[${username}]</a>
                 <button class="nav-login-btn" onclick="logoutUser()">Logout</button>
             `;
         } else {
@@ -120,6 +151,18 @@ document.addEventListener('submit', async (e) => {
         const authBtn = document.getElementById('authBtn');
         const authFeedback = document.getElementById('authFeedback');
 
+        // Grab the Turnstile token for BOTH Login and Register
+        let captchaToken = null;
+        if (window.turnstile && turnstileWidgetId !== null) {
+            captchaToken = window.turnstile.getResponse(turnstileWidgetId);
+        }
+
+        if (!captchaToken) {
+            authFeedback.textContent = "Please complete the security verification.";
+            authFeedback.style.color = "red";
+            return;
+        }
+
         authBtn.disabled = true;
         authFeedback.textContent = "Processing...";
         authFeedback.style.color = "var(--text-color)";
@@ -130,25 +173,46 @@ document.addEventListener('submit', async (e) => {
 
         try {
             if (isLoginMode) {
+                // LOGIN (Send Captcha token)
                 const { error } = await supabaseClient.auth.signInWithPassword({
-                    email: fakeEmail, password: password,
+                    email: fakeEmail,
+                    password: password,
+                    options: { captchaToken: captchaToken }
                 });
+
+                if (window.turnstile && turnstileWidgetId !== null) {
+                    window.turnstile.reset(turnstileWidgetId);
+                }
+
                 if (error) throw error;
-                closeAuthModal();
+                window.closeAuthModal();
                 updateNavState();
+
             } else {
+                // REGISTER (Send Captcha token)
                 const { error } = await supabaseClient.auth.signUp({
-                    email: fakeEmail, password: password,
+                    email: fakeEmail,
+                    password: password,
+                    options: { captchaToken: captchaToken }
                 });
+
+                if (window.turnstile && turnstileWidgetId !== null) {
+                    window.turnstile.reset(turnstileWidgetId);
+                }
+
                 if (error) throw error;
                 authFeedback.textContent = "Registration successful. Logging in...";
                 authFeedback.style.color = "green";
                 setTimeout(() => {
-                    closeAuthModal();
+                    window.closeAuthModal();
                     updateNavState();
                 }, 1000);
             }
         } catch (error) {
+            // Reset Captcha on error so they can try again
+            if (window.turnstile && turnstileWidgetId !== null) {
+                window.turnstile.reset(turnstileWidgetId);
+            }
             authFeedback.textContent = error.message;
             authFeedback.style.color = "red";
         } finally {
