@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Academic Dissent — My Ledger</title>
+    <meta name="description" content="Your private dashboard." />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Libre+Baskerville:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <!-- 1. Load Supabase FIRST for route protection -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  </head>
+  <body>
+    <!-- The Custom Header -->
+    <ad-header></ad-header>
+
+    <main class="container" id="dashboard-content" style="display: none;">
+      <header class="post-header">
+        <h2 id="dashboard-welcome">My Ledger</h2>
+        <div class="meta">Private Dashboard | End-to-End Encrypted</div>
+      </header>
+
+      <!-- Action Bar -->
+      <section style="margin-bottom: 3rem; display: flex; gap: 1rem;">
+        <a href="submit.html" class="submit-btn" style="text-decoration: none; display: inline-block; padding: 0.6rem 1.5rem;">+ Draft New Dissent</a>
+      </section>
+
+      <!-- The User's Submissions -->
+      <section class="critique-section">
+        <h3>My Submissions</h3>
+
+        <!-- Placeholder for when we load data from Supabase -->
+        <div id="user-submissions-list">
+
+            <!-- Example: Pending Item -->
+            <div style="border: 1px solid var(--border-color); padding: 1.5rem; margin-bottom: 1.5rem; background: #fff;">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1rem; border-bottom: 1px solid #eaeaea; padding-bottom: 0.5rem;">
+                    <h4 style="margin: 0; font-family: 'Libre Baskerville', serif;">Algorithmic Bias in Credit Scoring</h4>
+                    <span style="font-size: 0.8rem; font-family: 'Fira Code', monospace; color: #8a6d3b; background: #fcf8e3; padding: 2px 6px; border: 1px solid #faebcc;">Pending Review</span>
+                </div>
+                <p style="font-size: 0.9rem; margin-bottom: 1rem;">Target: Lee, H. et al., "Fair Lending in the Age of AI"</p>
+                <div style="font-size: 0.85rem; font-family: sans-serif;">
+                    <a href="#" style="color: var(--accent-color); font-weight: bold; margin-right: 1rem;">Edit Draft</a>
+                    <a href="#" style="color: #a94442; font-weight: bold;">Withdraw</a>
+                </div>
+            </div>
+
+            <!-- Example: Published Item -->
+            <div style="border: 1px solid var(--border-color); padding: 1.5rem; margin-bottom: 1.5rem; background: var(--bg-color);">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1rem; border-bottom: 1px solid #eaeaea; padding-bottom: 0.5rem;">
+                    <h4 style="margin: 0; font-family: 'Libre Baskerville', serif;">Spurious Correlation in Repo Markets</h4>
+                    <span style="font-size: 0.8rem; font-family: 'Fira Code', monospace; color: #3c763d; background: #dff0d8; padding: 2px 6px; border: 1px solid #d6e9c6;">Published — D4</span>
+                </div>
+                <p style="font-size: 0.9rem; margin-bottom: 1rem;">Target: Smith, J. & Doe, A., "DLT Adoption and Repo Rate Volatility"</p>
+                <div style="font-size: 0.85rem; font-family: sans-serif;">
+                    <a href="post.html" style="color: var(--text-color); font-weight: bold; margin-right: 1rem;">View Public Page</a>
+                </div>
+            </div>
+
+        </div>
+      </section>
+
+      <!-- Account Settings -->
+      <section class="critique-section">
+        <h3>Account Security</h3>
+        <p style="font-size: 0.9rem; color: var(--meta-color);">Remember: If you lose your password, account recovery is impossible. Your pseudonym is mathematically decoupled from your real identity.</p>
+        <button class="submit-btn" style="background: transparent; color: var(--text-color); margin-top: 1rem; max-width: 250px;" onclick="alert('Password change UI not yet implemented.')">Change Password</button>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <small>© <span id="year"></span> Academic Dissent • Rigorous, unvarnished truth.</small>
+    </footer>
+
+    <!-- Required Scripts -->
+    <script src="js/components.js"></script>
+    <script src="js/auth.js"></script>
+
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      window.addEventListener('load', async () => {
+          // 1. Immediately show the page layout, regardless of login status
+          document.getElementById('dashboard-content').style.display = 'block';
+
+          try {
+              // 2. Wait for Supabase to connect
+              const client = await window.supabaseReady;
+              const { data: { session } } = await client.auth.getSession();
+
+              // 3. If logged in, personalize the dashboard title
+              if (session) {
+                  const username = session.user.email.split('@')[0];
+                  document.getElementById('dashboard-welcome').textContent = `Ledger: ${username}`;
+              } else {
+                  document.getElementById('dashboard-welcome').textContent = `Ledger: Not Authenticated`;
+              }
+          } catch (err) {
+              console.error("Dashboard personalization skipped:", err);
+          }
+      });
+    </script>
+
+  </body>
+</html>

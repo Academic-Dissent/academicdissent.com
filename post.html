@@ -11,20 +11,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css">
   </head>
   <body>
-    <header class="site-header">
-      <div class="brand">
-        <div class="logo">
-          <span class="logo-mark">AD</span>
-          <span class="logo-name">Academic Dissent</span>
-        </div>
-      </div>
-      <nav class="site-nav">
-        <a href="index.html">Ledger</a>
-        <a href="subjects.html">Subjects</a>
-        <a href="dissent-tags.html">Dissent Tags</a>
-        <a href="about.html">About</a>
-      </nav>
-    </header>
+    <ad-header></ad-header>
 
     <main class="container">
       <article class="post" id="post"></article>
@@ -33,7 +20,9 @@
     <footer class="site-footer">
       <small>© <span id="year"></span> Academic Dissent</small>
     </footer>
-
+    <script src="js/components.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/auth.js"></script>
     <script src="js/data.js"></script>
     <!-- YAML parser for front matter (needed by client-side loader) -->
     <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>

@@ -10,20 +10,7 @@
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
-    <header class="site-header">
-      <div class="brand">
-        <div class="logo">
-          <span class="logo-mark">AD</span>
-          <span class="logo-name">Academic Dissent</span>
-        </div>
-      </div>
-      <nav class="site-nav">
-        <a href="index.html">Ledger</a>
-        <a href="subjects.html" class="active">Subjects</a>
-        <a href="dissent-tags.html">Dissent Tags</a>
-        <a href="about.html">About</a>
-      </nav>
-    </header>
+    <ad-header></ad-header>
 
     <main class="container">
       <h1>Subjects</h1>
@@ -33,7 +20,9 @@
     <footer class="site-footer">
       <small>© <span id="year"></span> Academic Dissent</small>
     </footer>
-
+    <script src="js/components.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/auth.js"></script>
     <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
     <script src="js/data.js"></script>
     <script src="js/render-taxonomy.js"></script>
